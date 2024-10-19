@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neo4j Test</title>
+  </head>
+  <body>
+    <input type="text" placeholder="Person 1" id="person1" />
+    <input type="text" placeholder="Person 2" id="person2" />
+    <button id="btn">Search</button>
+    <pre>
+        <code id="code"></code>
+    </pre>
+  </body>
+
+  <script>
+    const btn = document.querySelector("#btn");
+    const code = document.querySelector("#code");
+    const person1 = document.querySelector("#person1");
+    const person2 = document.querySelector("#person2");
+
+    btn.addEventListener("click", async () => {
+      code.innerText = "loading";
+
+      const res = await fetch(
+        `/get?person1=${encodeURIComponent(
+          person1.value
+        )}&person2=${encodeURIComponent(person2.value)}`
+      );
+
+      const json = await res.json();
+
+      code.innerText = "\n" + JSON.stringify(json, null, 4);
+    });
+  </script>
+</html>
